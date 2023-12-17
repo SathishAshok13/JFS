@@ -30,6 +30,7 @@ public class Main {
 
 
 3. To Reverse a Number :
+
 public class Main {
     public static void main(String[] args) {
         int number = 876;
@@ -45,6 +46,7 @@ public class Main {
 
 
 4. To Find the smallest among three numbers :
+
 public class Main {
     public static void main(String[] args) {
         int num1 = 11;
@@ -65,6 +67,7 @@ public class Main {
 
 
 5. To find final amount after applying discount :
+
 public class Main {
     public static void main(String[] args) {
         double purchased = 1997;
