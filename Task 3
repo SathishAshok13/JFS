@@ -1,0 +1,231 @@
+1. Library Management : 
+
+import java.util.Scanner;
+
+class Book {
+    private int bookID;
+    private String title;
+    private String author;
+    private boolean isAvailable;
+
+    public Book(int bookID, String title, String author) {
+        this.bookID = bookID;
+        this.title = title;
+        this.author = author;
+        this.isAvailable = true;
+    }
+
+    public int getBookID() {
+        return bookID;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public boolean isAvailable() {
+        return isAvailable;
+    }
+
+    public void setAvailable(boolean available) {
+        isAvailable = available;
+    }
+@Override
+    public String toString() {
+        return "BookID: " + bookID + ", Title: " + title + ", Author: " + author + ", Available: " + isAvailable;
+    }
+}
+
+class Library {
+    private Book[] books;
+
+    public Library(int capacity) {
+        this.books = new Book[capacity];
+    }
+
+    public void addBook(Book book) {
+        for (int i = 0; i < books.length; i++) {
+            if (books[i] == null) {
+                books[i] = book;
+                System.out.println("Book added successfully.");
+                return;
+            }
+        }
+        System.out.println("Library is full.Cannot add more books.");
+    }
+
+    public void removeBook(int bookID) {
+        for (int i = 0; i < books.length; i++) {
+            if (books[i] != null && books[i].getBookID() == bookID) {
+                books[i] = null;
+                System.out.println("Book removed successfully.");
+                return;
+            }
+        }
+        System.out.println("Book not found in the library.");
+    }
+
+    public Book searchBook(int bookID) {
+        for (Book book : books) {
+            if (book != null && book.getBookID() == bookID) {
+                return book;
+            }
+        }
+        return null;
+    }
+
+    public void displayBooks() {
+        System.out.println("Books in the library:");
+        for (Book book : books) {
+            if (book != null) {
+                System.out.println(book);
+            }
+        }
+    }
+}
+
+public class BookManagementSystem {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        Library library = new Library(5);
+
+        while (true) {
+            System.out.println("\nLibrary System Menu:");
+            System.out.println("1. Add Book");
+            System.out.println("2. Remove Book");
+            System.out.println("3. Search Book");
+            System.out.println("4. Display Books");
+            System.out.println("5. Exit");
+            System.out.print("Enter your choice: ");
+
+            int choice = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (choice) {
+
+                case 1:
+                    System.out.print("Enter BookID: ");
+                    int bookID = scanner.nextInt();
+                    scanner.nextLine();
+                    System.out.print("Enter Title: ");
+                    String title = scanner.nextLine();
+                    System.out.print("Enter Author: ");
+                    String author = scanner.nextLine();
+
+                    Book newBook = new Book(bookID, title, author);
+                    library.addBook(newBook);
+                    break;
+                case 2:
+                    System.out.print("Enter BookID to remove: ");
+                    int bookToRemove = scanner.nextInt();
+                    library.removeBook(bookToRemove);
+                    break;
+                case 3:
+                    System.out.print("Enter BookID to search: ");
+                    int bookToSearch = scanner.nextInt();
+                    Book foundBook = library.searchBook(bookToSearch);
+                    if (foundBook != null) {
+                        System.out.println("Book found: " + foundBook);
+                    } else {
+                        System.out.println("Book not found in the library.");
+                    }
+                    break;
+                case 4:
+                    library.displayBooks();
+                    break;
+                case 5:
+                    System.out.println("Exiting the Library System!");
+                    System.exit(0);
+                    scanner.close();
+                default:
+                    System.out.println("Invalid choice. Please enter a valid option.");
+            }
+        }
+    }
+}
+
+_____________________________________________________________________________________________________________________________________________________________________________________________________________
+
+2. Taxation : 
+
+import java.util.Scanner;
+
+interface Taxable {
+    double salesTaxRate = 0.07; 
+    double incomeTaxRate = 0.105;
+
+    double calcTax();
+}
+
+class Employee implements Taxable {
+    private int empId;
+    private String name;
+    private double salary;
+
+    public Employee(int empId, String name, double salary) {
+        this.empId = empId;
+        this.name = name;
+        this.salary = salary;
+    }
+
+    @Override
+    public double calcTax() {
+        return salary * incomeTaxRate;
+    }
+}
+
+class Product implements Taxable {
+    private int pid;
+    private double price;
+    private int quantity;
+
+    public Product(int pid, double price, int quantity) {
+        this.pid = pid;
+        this.price = price;
+        this.quantity = quantity;
+    }
+
+    @Override
+    public double calcTax() {
+        return price * quantity * salesTaxRate;
+    }
+}
+
+public class XYZ {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Enter Employee Details:");
+        System.out.print("Employee ID: ");
+        int empId = scanner.nextInt();
+        scanner.nextLine(); 
+        System.out.print("Employee Name: ");
+        String empName = scanner.nextLine();
+        System.out.print("Salary: ");
+        double salary = scanner.nextDouble();
+
+        Employee employee = new Employee(empId, empName, salary);
+
+        System.out.println("\nIncome Tax Calculation:");
+        System.out.println("Income Tax: ₹" + employee.calcTax());
+
+        System.out.println("\nEnter Product Information:");
+        System.out.print("Product ID: ");
+        int productId = scanner.nextInt();
+        System.out.print("Unit Price: ");
+        double unitPrice = scanner.nextDouble();
+        System.out.print("Quantity: ");
+        int quantity = scanner.nextInt();
+
+        Product product = new Product(productId, unitPrice, quantity);
+
+        System.out.println("\nSales Tax Calculation:");
+        System.out.println("Sales Tax: ₹" + product.calcTax());
+
+        scanner.close();
+    }
+}
