@@ -1,0 +1,325 @@
+1. Student Management System : 
+
+import java.util.Scanner;
+
+class AgeNotWithinRangeException extends Exception {
+    public AgeNotWithinRangeException(String message) {
+        super(message);
+    }
+}
+
+class NameNotValidException extends Exception {
+    public NameNotValidException(String message) {
+        super(message);
+    }
+}
+
+class Student {
+    private int rollNo;
+    private String name;
+    private int age;
+    private String course;
+
+    public Student(int rollNo, String name, int age, String course) throws AgeNotWithinRangeException, NameNotValidException {
+        if (age < 15 || age > 21) {
+            throw new AgeNotWithinRangeException("Age should be between 15 and 21!");
+        }
+
+        if (!name.matches("^[a-zA-Z\\s]+$")) {
+            throw new NameNotValidException("Name should not contain numbers or special symbols!");
+        }
+
+        this.rollNo = rollNo;
+        this.name = name;
+        this.age = age;
+        this.course = course;
+    }
+
+    public void displayDetails() {
+        System.out.println("\nGreat!...);
+    }
+
+    public void another() {
+        System.out.println(rollNo + name + age + course);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        try {
+            System.out.print("\nEnter Roll No: ");
+            int rollNo = scanner.nextInt();
+            scanner.nextLine();
+
+            System.out.print("Enter Name: ");
+            String name = scanner.nextLine();
+
+            System.out.print("Enter Age: ");
+            int age = scanner.nextInt();
+
+            System.out.print("Enter Course: ");
+            String course = scanner.next();
+
+            Student student = new Student(rollNo, name, age, course);
+            student.displayDetails();
+        } catch (AgeNotWithinRangeException error) {
+            System.out.println("Error: " + error);
+        } catch (NameNotValidException error) {
+            System.out.println("Error: " + error);
+        } catch (Exception error) {
+            System.out.println("Error: Invalid input.");
+        } finally {
+            scanner.close();
+        }
+    }
+}
+
+
+Output : 
+
+Enter Roll No: 100
+Enter Name: Sathish Ashok
+Enter Age: 26
+Enter Course: CSE
+
+Error: AgeNotWithinRangeException: Age should be between 15 and 21!
+
+______________________________________________________________________________________________________________________
+
+
+2. Voter Eligibility : 
+
+import java.util.Scanner;
+
+class AgeNotEligibleException extends Exception {
+    public AgeNotEligibleException(String message) {
+        super(message);
+    }
+}
+
+class Voter {
+    private int voterID, age;
+    private String name;
+
+    public Voter(int voterID, int age, String name) throws AgeNotEligibleException {
+        if (age < 18) {
+            throw new AgeNotEligibleException("Age should be minimum 18 yrs!");
+        }
+
+        this.voterID = voterID;
+        this.age = age;
+        this.name = name;
+    }
+
+    public void display() {
+        System.out.println("Welcome to Vote!...");
+    }
+
+    public void another() {
+        System.out.println(voterID + age + name);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        try {
+            System.out.print("\nEnter ID Number : ");
+            int voterID = sc.nextInt();
+
+            System.out.print("Enter Name : ");
+            String name = sc.nextLine();
+            sc.nextLine();
+
+            System.out.print("Enter Age : ");
+            int age = sc.nextInt();
+
+            Voter voter = new Voter(voterID, age, name);
+            voter.display();
+            
+        } catch (AgeNotEligibleException error) {
+            System.out.println("\nError : " + error);
+        } catch (Exception error) {
+            System.out.println("\nInvalid Input!");
+        } finally {
+            sc.close();
+        }
+    }
+}
+
+
+Output : 
+
+Enter ID Number: 100
+Enter Name: Sathish Ashok
+Enter Age: 26
+
+Welcome to Vote!...
+
+_______________________________________________________________________________________________________
+
+
+3. Array of Week Names : 
+
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        String[] weekNames = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"};
+
+        Scanner sc = new Scanner(System.in);
+        System.out.print("\nEnter the Day : "); 
+
+        try {   
+            int position = sc.nextInt();         
+            System.out.print(weekNames[position]);
+        } catch (ArrayIndexOutOfBoundsException error) {
+            System.out.println("Please Enter a day from 0 to 6 ");
+        } catch (Exception error) {
+            System.out.println("Invalid Input!...");
+        } finally {
+            sc.close();
+        }
+    }
+}
+
+
+Output : 
+
+Enter the Day : A
+Invalid Input!...
+
+____________________________________________________________________________________________________________________
+
+
+4. HashMap of Student Grades : 
+
+import java.util.HashMap;
+import java.util.Scanner;
+
+public class Main {
+    private HashMap<String, Integer> studentGrades = new HashMap<>();
+
+    public void addStudent(String name, int grade) {
+        studentGrades.put(name, grade);
+    }
+
+    public void removeStudent(String name) {
+        studentGrades.remove(name);
+    }
+
+    public void displayGrade(String name) {
+        int grade = studentGrades.get(name);
+        System.out.println(grade);
+    }
+
+    public static void main(String[] args) {
+        Main studentGrades = new Main();
+        Scanner scanner = new Scanner(System.in);
+        String choice;
+
+        do {
+            System.out.println("Choose an option:");
+            System.out.println("1. Add a student");
+            System.out.println("2. Remove a student");
+            System.out.println("3. Display a student's grade");
+            System.out.println("4. Exit");
+            System.out.print("Enter your choice: ");
+            choice = scanner.nextLine();
+
+            switch (choice) {
+                case "1":
+                    System.out.print("Enter student's name: ");
+                    String name = scanner.nextLine();
+                    System.out.print("Enter student's grade: ");
+                    int grade = scanner.nextInt();
+                    scanner.nextLine(); 
+                    studentGrades.addStudent(name, grade);
+                    break;
+                case "2":
+                    System.out.print("Enter student's name to remove: ");
+                    String removeName = scanner.nextLine();
+                    studentGrades.removeStudent(removeName);
+                    break;
+                case "3":
+                    System.out.print("Enter student's name to display grade: ");
+                    String displayName = scanner.nextLine();
+                    studentGrades.displayGrade(displayName);
+                    break;
+                case "4":
+                    System.out.println("Exiting program...");
+                    break;
+                default:
+                    System.out.println("Invalid choice, please try again.");
+            }
+        } while (!choice.equals("4"));
+
+        scanner.close();
+    }
+}
+
+
+Output : 
+
+Choose an option:
+1. Add a student
+2. Remove a student
+3. Display a student's grade
+4. Exit
+Enter your choice: 1
+Enter student's name: Sathish
+Enter student's grade: 90
+Choose an option:
+1. Add a student
+2. Remove a student
+3. Display a student's grade
+4. Exit
+Enter your choice: 3
+Enter student's name to display grade: Sathish
+90
+
+______________________________________________________________________________________________________________________
+
+
+5. Stack : 
+
+import java.util.Stack;
+
+public class Main {
+    static Stack<Integer> numbers = new Stack<>();
+
+    static void push(int element) {
+        numbers.push(element);
+    }
+
+    static void pop() {
+        if (!numbers.isEmpty()) {
+            numbers.pop();
+        }
+    }
+
+    static boolean check() {
+        return numbers.isEmpty();
+    }
+    
+    public static void main(String[] args) {
+        push(10);
+        push(20);
+
+        System.out.println("Original Stack : " + numbers);
+        pop();
+        System.out.println("Modified Stack : " + numbers);
+        System.out.println("Is Stack Empty : " + check());
+    }
+}
+
+
+Output : 
+
+Original Stack : [10, 20]
+Modified Stack : [10]
+Is Stack Empty : false
+
